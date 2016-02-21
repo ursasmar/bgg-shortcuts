@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       BGG Shortcuts
 // @namespace  BGG Shortcuts
-// @version    0.9.1
+// @version    0.9.2
 // @description  Keyboard shortcuts for the Geek
 // @include     http://*.boardgamegeek.*/*
 // @include     http://boardgamegeek.*/*
@@ -13,6 +13,7 @@
 /*
  * CHANGLOG::
  * ============================================
+ * 0.9.2 - Better next link
  * 0.9.1 - Fixed a stupid bug
  * 0.9.0 - Updated so that the shortcuts work on the new game page style
  * 0.8.1 - Updated to work on https
@@ -42,7 +43,8 @@
             // Next subscription item J
             if (e.keyCode === 74) {
                 if (!!document.querySelector('[href="/subscriptions/next"]')) {
-                    document.querySelectorAll('[href="/subscriptions/next"]').click();
+                    var next = document.querySelectorAll('[href="/subscriptions/next"]');
+                    next[0].click();
                 } else if (!!document.querySelectorAll("img:not(dn).nextsubcol")[0]) {
                    [].slice.call(document.querySelectorAll("img:not(dn).nextsubcol")[0].parentNode.parentNode.click()); 
                 }
