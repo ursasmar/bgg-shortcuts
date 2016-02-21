@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       BGG Shortcuts
 // @namespace  BGG Shortcuts
-// @version    0.8.1
+// @version    0.9.0
 // @description  Keyboard shortcuts for the Geek
 // @include     http://*.boardgamegeek.*/*
 // @include     http://boardgamegeek.*/*
@@ -13,6 +13,7 @@
 /*
  * CHANGLOG::
  * ============================================
+ * 0.9.0 - Updated so that the shortcuts work on the new game page style
  * 0.8.1 - Updated to work on https
  * 0.8.0 - Forum links pop up in a modal so that you don't lose your place on a page
  * 0.7.0 - Changed the links to just be J for next item, H for home, and / for search, but disabled shortcuts in form elements
@@ -39,7 +40,8 @@
             
             // Next subscription item J
             if (e.keyCode === 74) {
-                [].slice.call(document.querySelectorAll("img:not(dn).nextsubcol"))[0].parentNode.parentNode.click();
+              var next = !!document.querySelector('[href="/subscriptions/next"]') ? document.querySelector('[href="/subscriptions/next"]') : document.querySelectorAll("img:not(dn).nextsubcol"))[0].parentNode.parentNode;
+                [].slice.call(next.click();
             }
             
             // Home page H
@@ -49,7 +51,7 @@
             
             // Search box jump /
             if (e.keyCode === 191) {
-                var searchbox = document.getElementById('sitesearch');
+                var searchbox = !!document.getElementById('sitesearch') ? document.getElementById('sitesearch') : document.querySelector('[ng-model="searchctrl.search.q"]');
                 document.body.scrollTop = 0;
                 searchbox.focus();
                 window.setTimeout(function() { searchbox.value = ''; }, 10);
