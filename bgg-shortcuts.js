@@ -40,8 +40,8 @@
             
             // Next subscription item J
             if (e.keyCode === 74) {
-              var next = !!document.querySelector('[href="/subscriptions/next"]') ? document.querySelector('[href="/subscriptions/next"]') : document.querySelectorAll("img:not(dn).nextsubcol"))[0].parentNode.parentNode;
-                [].slice.call(next.click();
+                var next = !!document.querySelector('[href="/subscriptions/next"]') ? document.querySelector('[href="/subscriptions/next"]') : document.querySelectorAll("img:not(dn).nextsubcol"))[0].parentNode.parentNode;
+                [].slice.call(next.click());
             }
             
             // Home page H
