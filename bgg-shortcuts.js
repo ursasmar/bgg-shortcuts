@@ -40,8 +40,11 @@
             
             // Next subscription item J
             if (e.keyCode === 74) {
-                var next = !!document.querySelector('[href="/subscriptions/next"]') ? document.querySelector('[href="/subscriptions/next"]') : document.querySelectorAll("img:not(dn).nextsubcol"))[0].parentNode.parentNode;
-                [].slice.call(next.click());
+                if (!!document.querySelector('[href="/subscriptions/next"]')) {
+                    document.querySelectorAll('[href="/subscriptions/next"]').click();
+                } else {
+                   [].slice.call(document.querySelectorAll("img:not(dn).nextsubcol")[0].parentNode.parentNode.click()); 
+                }
             }
             
             // Home page H
