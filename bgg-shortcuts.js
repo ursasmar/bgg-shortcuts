@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       BGG Shortcuts
 // @namespace  BGG Shortcuts
-// @version    0.9.2
+// @version    0.9.3
 // @description  Keyboard shortcuts for the Geek
 // @include     http://*.boardgamegeek.*/*
 // @include     http://boardgamegeek.*/*
@@ -13,6 +13,7 @@
 /*
  * CHANGLOG::
  * ============================================
+ * 0.9.3 - Fixed an error on Firefox relating to using strict
  * 0.9.2 - Better next link
  * 0.9.1 - Fixed a stupid bug
  * 0.9.0 - Updated so that the shortcuts work on the new game page style
