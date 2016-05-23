@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       BGG Shortcuts
 // @namespace  BGG Shortcuts
-// @version    0.9.3
+// @version    0.9.4
 // @description  Keyboard shortcuts for the Geek
 // @include     http://*.boardgamegeek.*/*
 // @include     http://boardgamegeek.*/*
@@ -13,6 +13,7 @@
 /*
  * CHANGLOG::
  * ============================================
+ * 0.9.4 - When loading a comment in a geeklist, scroll to item the comment is for
  * 0.9.3 - Fixed an error on Firefox relating to using strict
  * 0.9.2 - Better next link
  * 0.9.1 - Fixed a stupid bug
@@ -238,8 +239,35 @@
         }
     }
 
-    function getUser(name)
-    {
+    // Check for readystate so that we can shift the page if needed
+      var interval = setInterval(function() {
+          if(document.readyState === 'complete') {
+              clearInterval(interval);
+              checkForComment();
+          }    
+      }, 100);
+
+      function checkForComment() {
+        if (/comment[0-9]+/.test(window.location.hash) && window.location.pathname.includes('/geeklist/')) {
+          var hash = window.location.hash;
+          var comment = document.querySelector(hash);
+          var parent = comment.parentElement.parentElement.parentElement.parentElement; // get the actual item
+
+          window.scroll(0, findPos(parent));
+        }
+      }
+
+      function findPos(obj) {
+          var curtop = 0;
+          if (obj.offsetParent) {
+              do {
+                  curtop += obj.offsetTop;
+              } while (obj = obj.offsetParent);
+          return [curtop];
+          }
+      }
+
+    function getUser(name) {
         var req = new XMLHttpRequest(),
         apiUrl = window.location.protocol + '//' + window.location.host + '/xmlapi2/user?name=' + name;
 
