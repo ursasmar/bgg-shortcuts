@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       BGG Shortcuts
 // @namespace  BGG Shortcuts
-// @version    0.9.4
+// @version    0.9.5
 // @description  Keyboard shortcuts for the Geek
 // @include     http://*.boardgamegeek.*/*
 // @include     http://boardgamegeek.*/*
@@ -13,6 +13,7 @@
 /*
  * CHANGLOG::
  * ============================================
+ * 0.9.5 - Add K shortcut to go back a page
  * 0.9.4 - When loading a comment in a geeklist, scroll to item the comment is for
  * 0.9.3 - Fixed an error on Firefox relating to using strict
  * 0.9.2 - Better next link
@@ -75,6 +76,11 @@
                 {
                     searchbox.value = '';
                 }, 10);
+            }
+
+            // K to go back
+            if (e.keyCode === 75) {
+                window.history.back();
             }
         }
 
