@@ -1,5 +1,9 @@
 # CHANGELOG
 
+##0.9.5
+2016-05-22
+Add K shortcut to go back a page
+
 ## 0.9.4
 2016-05-22
 When loading a comment in a geeklist, scroll to item the comment is for, because I am lazy 
