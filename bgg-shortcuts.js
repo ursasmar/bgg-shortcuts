@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       BGG Shortcuts
 // @namespace  BGG Shortcuts
-// @version    0.9.5
+// @version    0.9.6
 // @description  Keyboard shortcuts for the Geek
 // @include     http://*.boardgamegeek.*/*
 // @include     http://boardgamegeek.*/*
@@ -13,6 +13,7 @@
 /*
  * CHANGLOG::
  * ============================================
+ * 0.9.6 - Add shortcuts on the subscription page for auto selecting settings
  * 0.9.5 - Add K shortcut to go back a page
  * 0.9.4 - When loading a comment in a geeklist, scroll to item the comment is for
  * 0.9.3 - Fixed an error on Firefox relating to using strict
@@ -32,48 +33,39 @@
  *
  */
 
-(function ()
-{
+(function () {
     "use strict";
     console.log('Loaded BGG Shortcuts');
 
-    document.body.addEventListener('keydown', function (e)
-    {
+    document.body.addEventListener('keydown', function (e) {
         var active = document.activeElement.tagName.toLowerCase(),
-        badElements = ['input', 'textarea', 'select'];
+            badElements = ['input', 'textarea', 'select'];
 
         // ignore shortcuts if we are in some form of input
-        if (badElements.indexOf(active) === -1)
-        {
+        if (badElements.indexOf(active) === -1) {
 
             // Next subscription item J
-            if (e.keyCode === 74)
-            {
-                if (!!document.querySelector('[href="/subscriptions/next"]'))
-                {
+            if (e.keyCode === 74) {
+                if (!!document.querySelector('[href="/subscriptions/next"]')) {
                     var next = document.querySelectorAll('[href="/subscriptions/next"]');
                     next[0].click();
                 }
-                else if (!!document.querySelectorAll("img:not(dn).nextsubcol")[0])
-                {
+                else if (!!document.querySelectorAll("img:not(dn).nextsubcol")[0]) {
                     [].slice.call(document.querySelectorAll("img:not(dn).nextsubcol")[0].parentNode.parentNode.click());
                 }
             }
 
             // Home page H
-            if (e.keyCode === 72 && window.location.href !== window.location.origin)
-            {
+            if (e.keyCode === 72 && window.location.href !== window.location.origin) {
                 window.location.href = window.location.origin;
             }
 
             // Search box jump /
-            if (e.keyCode === 191)
-            {
+            if (e.keyCode === 191) {
                 var searchbox = !!document.getElementById('sitesearch') ? document.getElementById('sitesearch') : document.querySelector('[ng-model="searchctrl.search.q"]');
                 document.body.scrollTop = 0;
                 searchbox.focus();
-                window.setTimeout(function ()
-                {
+                window.setTimeout(function () {
                     searchbox.value = '';
                 }, 10);
             }
@@ -82,62 +74,153 @@
             if (e.keyCode === 75) {
                 window.history.back();
             }
+
+            /**
+             * Subscription Page Hotkeys
+             * =========================
+             * These are only triggered on the subscription page, so each one has a check
+             * a = turn everything to yes 65
+             * o = i own the game, and want to track it 80
+             * b = i want to buy the game 71
+             */
+            var subKeys = [65, 66, 79];
+            if (subKeys.indexOf(e.keyCode) !== -1) {
+                subscriptionSelection(e.keyCode);
+            }
+
         }
 
     }, false);
 
+    if (window.location.pathname.split('/')[1] === 'subscription') {
+        //show the hoykeys for this page
+        var table = getNearestTableAncestor(document.querySelector('#thread'));
+        var newDiv = document.createElement("div");
+        var all = document.createElement("div");
+        var allDesc = document.createTextNode('a - turn on all subscriptions');
+        var own = document.createElement("div");
+        var ownDesc = document.createTextNode("o - I own the game, just track the important things");
+        var buy = document.createElement("div");
+        var buyDesc = document.createTextNode('b - I want to buy the game, so track sales');
+
+        all.appendChild(allDesc);
+        own.appendChild(ownDesc);
+        buy.appendChild(buyDesc);
+
+        newDiv.appendChild(all);
+        newDiv.appendChild(own);
+        newDiv.appendChild(buy);
+
+        table.parentNode.insertBefore(newDiv, table.nextSibling);
+    }
+
+    function subscriptionSelection(key) {
+        if (window.location.pathname.split('/')[1] === 'subscription') {
+            var thread = document.querySelector('#thread');
+            var reply = document.querySelector('#article');
+            var geeklist = document.querySelector('#listitem');
+            var image = document.querySelector('#image');
+            var video = document.querySelector('#video');
+            var ebay = document.querySelector('#ebayauction');
+            var market = document.querySelector('#storeitem');
+            var file = document.querySelector('#file');
+            var member = document.querySelector('#linkeditem');
+            var comment = document.querySelector('#comment');
+            var blog = document.querySelector('#blogpost');
+            var preview = document.querySelector('#previewitem');
+
+            switch (key) {
+                case 65:
+                    thread.selectedIndex = 1;
+                    reply.selectedIndex = 1;
+                    geeklist.selectedIndex = 1;
+                    image.selectedIndex = 1;
+                    video.selectedIndex = 1;
+                    ebay.selectedIndex = 1;
+                    market.selectedIndex = 1;
+                    file.selectedIndex = 1;
+                    member.selectedIndex = 1;
+                    comment.selectedIndex = 1;
+                    blog.selectedIndex = 1;
+                    preview.selectedIndex = 1;
+                    break;
+                case 66:
+                    thread.selectedIndex = 2;
+                    reply.selectedIndex = 2;
+                    geeklist.selectedIndex = 1;
+                    image.selectedIndex = 2;
+                    video.selectedIndex = 2;
+                    ebay.selectedIndex = 1;
+                    market.selectedIndex = 1;
+                    file.selectedIndex = 2;
+                    member.selectedIndex = 2;
+                    comment.selectedIndex = 2;
+                    blog.selectedIndex = 2;
+                    preview.selectedIndex = 2;
+                    break;
+                case 79:
+                    thread.selectedIndex = 1;
+                    reply.selectedIndex = 2;
+                    geeklist.selectedIndex = 2;
+                    image.selectedIndex = 2;
+                    video.selectedIndex = 2;
+                    ebay.selectedIndex = 2;
+                    market.selectedIndex = 2;
+                    file.selectedIndex = 2;
+                    member.selectedIndex = 2;
+                    comment.selectedIndex = 2;
+                    blog.selectedIndex = 2;
+                    preview.selectedIndex = 2;
+                    break;
+
+            }
+        }
+    }
+
     //check for one result on the search page
-    if (window.location.pathname === '/geeksearch.php' && window.location.search.search(/action=search/))
-    {
+    if (window.location.pathname === '/geeksearch.php' && window.location.search.search(/action=search/)) {
         var results = document.querySelectorAll('#collectionitems tbody tr');
         console.log('We are searching');
-        if (results.length === 2)
-        {
+        if (results.length === 2) {
             console.log('Found just one result, redirect');
             var link = results[1].querySelectorAll('#results_objectname1 a'),
-            href = link[0].getAttribute('href');
+                href = link[0].getAttribute('href');
 
             window.location.href = window.location.origin + href;
         }
     }
 
     // set all homepage module links to open in new tab
-    if (window.location.pathname === '/')
-    {
-        window.setTimeout(function ()
-        {
+    if (window.location.pathname === '/') {
+        window.setTimeout(function () {
             console.log('Changing homepage links');
             var links = document.querySelectorAll('.innermoduletable tbody td a.ng-binding'),
-            linkArray = [].slice.call(links);
+                linkArray = [].slice.call(links);
 
-            linkArray.forEach(function (item, index)
-            {
-                item.setAttribute('target', '_blank');
-            }
+            linkArray.forEach(function (item, index) {
+                    item.setAttribute('target', '_blank');
+                }
             );
         }, 500);
     }
 
     // popup forum links in a dialog
-    if (window.location.pathname.split('/')[1] === 'boardgame')
-    {
+    if (window.location.pathname.split('/')[1] === 'boardgame') {
         // grab all forum link clicks
         document.addEventListener('click', forumClick, false);
     }
 
-    function forumClick(e)
-    {
-        if (e.target.tagName === 'A' && e.target.href.split('/')[3] === 'thread')
-        {
+    function forumClick(e) {
+        if (e.target.tagName === 'A' && e.target.href.split('/')[3] === 'thread') {
             e.preventDefault();
 
             // use the BGG API to get the thread
             var req = new XMLHttpRequest(),
-            apiUrl = window.location.protocol + '//' + window.location.host + '/xmlapi2/thread?id=',
-            diag = document.createElement('dialog'),
-            content = document.createElement('div'),
-            close = document.createElement('button'),
-            thread = e.target.href.split('/')[4];
+                apiUrl = window.location.protocol + '//' + window.location.host + '/xmlapi2/thread?id=',
+                diag = document.createElement('dialog'),
+                content = document.createElement('div'),
+                close = document.createElement('button'),
+                thread = e.target.href.split('/')[4];
 
             diag.style.width = '80%';
             diag.style.height = '80%';
@@ -161,15 +244,12 @@
         }
     }
 
-    function showContents(e, req)
-    {
-        if (req.readyState === 4 && req.status === 200)
-        {
+    function showContents(e, req) {
+        if (req.readyState === 4 && req.status === 200) {
             var subject = req.responseXML.documentElement.children[0].firstChild.nodeValue,
-            articles = req.responseXML.documentElement.children[1].children;
+                articles = req.responseXML.documentElement.children[1].children;
 
-            for (var i = 0; i < articles.length; i++)
-            {
+            for (var i = 0; i < articles.length; i++) {
                 var article = articles[i];
                 var user = article.getAttribute('username');
                 var title = article.children[0].firstChild.nodeValue;
@@ -235,10 +315,9 @@
 
             diag.insertBefore(close, diag.childNodes[0]);
             diag.insertBefore(content, diag.childNodes[0]);
-            close.addEventListener('click', function (e)
-            {
-                diag.close();
-            }
+            close.addEventListener('click', function (e) {
+                    diag.close();
+                }
             );
             document.body.insertBefore(diag, document.body.childNodes[0]);
             diag.showModal();
@@ -246,41 +325,39 @@
     }
 
     // Check for readystate so that we can shift the page if needed
-      var interval = setInterval(function() {
-          if(document.readyState === 'complete') {
-              clearInterval(interval);
-              checkForComment();
-          }    
-      }, 100);
-
-      function checkForComment() {
-        if (/comment[0-9]+/.test(window.location.hash) && window.location.pathname.includes('/geeklist/')) {
-          var hash = window.location.hash;
-          var comment = document.querySelector(hash);
-          var parent = comment.parentElement.parentElement.parentElement.parentElement; // get the actual item
-
-          window.scroll(0, findPos(parent));
+    var interval = setInterval(function () {
+        if (document.readyState === 'complete') {
+            clearInterval(interval);
+            checkForComment();
         }
-      }
+    }, 100);
 
-      function findPos(obj) {
-          var curtop = 0;
-          if (obj.offsetParent) {
-              do {
-                  curtop += obj.offsetTop;
-              } while (obj = obj.offsetParent);
-          return [curtop];
-          }
-      }
+    function checkForComment() {
+        if (/comment[0-9]+/.test(window.location.hash) && window.location.pathname.includes('/geeklist/')) {
+            var hash = window.location.hash;
+            var comment = document.querySelector(hash);
+            var parent = comment.parentElement.parentElement.parentElement.parentElement; // get the actual item
+
+            window.scroll(0, findPos(parent));
+        }
+    }
+
+    function findPos(obj) {
+        var curtop = 0;
+        if (obj.offsetParent) {
+            do {
+                curtop += obj.offsetTop;
+            } while (obj = obj.offsetParent);
+            return [curtop];
+        }
+    }
 
     function getUser(name) {
         var req = new XMLHttpRequest(),
-        apiUrl = window.location.protocol + '//' + window.location.host + '/xmlapi2/user?name=' + name;
+            apiUrl = window.location.protocol + '//' + window.location.host + '/xmlapi2/user?name=' + name;
 
-        req.onreadystatechange = function (e)
-        {
-            if (req.readyState === 4 && req.status === 200)
-            {
+        req.onreadystatechange = function (e) {
+            if (req.readyState === 4 && req.status === 200) {
                 console.log(req.responseXML);
             }
         };
@@ -289,5 +366,15 @@
 
         req.send();
     }
+
+    function getNearestTableAncestor(htmlElementNode) {
+        while (htmlElementNode) {
+            htmlElementNode = htmlElementNode.parentNode;
+            if (htmlElementNode.tagName.toLowerCase() === 'table') {
+                return htmlElementNode;
+            }
+        }
+        return undefined;
+    }
 }
-    ());
+());
