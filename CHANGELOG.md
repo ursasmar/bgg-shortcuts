@@ -1,6 +1,13 @@
 # CHANGELOG
 
-##0.9.5
+## 0.9.6
+2018-01-19
+Added a, o and b as shortcuts on the edit subscription page
+a will turn on all subscriptions
+o is for a game I already own, basically subscribes to just new threads
+b is for a game I would like to purchase, so it subscribes to Geeklists (for auctions), eBay, and the Market
+
+## 0.9.5
 2016-05-22
 Add K shortcut to go back a page
 
@@ -8,44 +15,44 @@ Add K shortcut to go back a page
 2016-05-22
 When loading a comment in a geeklist, scroll to item the comment is for, because I am lazy 
 
-##0.9.3
+## 0.9.3
 Fixed an error on Firefox relating to using strict
 
 ## 0.9.2
 Better next link
 
-##0.9.1
+## 0.9.1
 Fixed a stupid bug
 
-##0.9.0
+## 0.9.0
 Updated so that the shortcuts work on the new game page style
 
-##0.8.1
+## 0.8.1
 Updated to work on https
 
-##0.8.0
+## 0.8.0
 Forum links pop up in a modal so that you don't lose your place on a page
 
-##0.7.0
+## 0.7.0
 Changed the links to just be J for next item, H for home, and / for search, but disabled shortcuts in form elements
 
-##0.6.1
+## 0.6.1
 Give the page some time to load its scripts before changing links
 
-##0.6.0
+## 0.6.0
 Added a shortcut to go to the searchbox Ctrl + /
 
-##0.5.0
+## 0.5.0
 Added homepage links opening in new tab
 
-##0.4.0
+## 0.4.0
 If search returns one result just go to that result
 
-##0.3.0
+## 0.3.0
 Added homepage shortcut; Ctrl + Shift + H
 
-##0.2.0
+## 0.2.0
 Cleaned up the subscription jump link
 
-##0.1.0
+## 0.1.0
 First version, shortcut for subscriptions; Ctrl + M
