@@ -1,4 +1,7 @@
 # CHANGELOG
+## 0.9.7
+2019-02-12
+Change the font size so my old eyes can read it
 
 ## 0.9.6
 2018-01-19

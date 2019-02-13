@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       BGG Shortcuts
 // @namespace  BGG Shortcuts
-// @version    0.9.6
+// @version    0.9.7
 // @description  Keyboard shortcuts for the Geek
 // @include     http://*.boardgamegeek.*/*
 // @include     http://boardgamegeek.*/*
@@ -13,6 +13,7 @@
 /*
  * CHANGLOG::
  * ============================================
+ * 0.9.7 - Change some font sizes
  * 0.9.6 - Add shortcuts on the subscription page for auto selecting settings
  * 0.9.5 - Add K shortcut to go back a page
  * 0.9.4 - When loading a comment in a geeklist, scroll to item the comment is for
@@ -375,6 +376,13 @@
             }
         }
         return undefined;
+    }
+
+    // change the font size
+    let el = document.querySelectorAll('div.article dd');
+    for (let i = 0; i < el.length; i++) {
+        let element = el[i];
+        element.style.fontSize = "1.25em";
     }
 }
 ());
