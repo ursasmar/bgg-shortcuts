@@ -13,6 +13,7 @@
 /*
  * CHANGLOG::
  * ============================================
+ * 0.9.8.1 - Use the correct key
  * 0.9.8 - Update to hot key handling
  * 0.9.7 - Change some font sizes
  * 0.9.6 - Add shortcuts on the subscription page for auto selecting settings
@@ -47,7 +48,7 @@
 		if (badElements.indexOf(active) === -1) {
 
 			// Next subscription item J
-			if (e.code === 'j') {
+			if (e.key === 'j') {
 				if (!!document.querySelector('[href="/subscriptions/next"]')) {
 					let next = document.querySelectorAll('[href="/subscriptions/next"]');
 					next[0].click();
@@ -57,12 +58,12 @@
 			}
 
 			// Home page H
-			if (e.code === 'h' && window.location.href !== window.location.origin) {
+			if (e.key === 'h' && window.location.href !== window.location.origin) {
 				window.location.href = window.location.origin;
 			}
 
 			// Search box jump /
-			if (e.code === '/') {
+			if (e.key === '/') {
 				let searchbox = !!document.getElementById('sitesearch') ? document.getElementById('sitesearch') : document.querySelector('[ng-model="searchctrl.search.q"]');
 				document.body.scrollTop = 0;
 				searchbox.focus();
@@ -72,7 +73,7 @@
 			}
 
 			// K to go back
-			if (e.code === 'k') {
+			if (e.key === 'k') {
 				window.history.back();
 			}
 
@@ -85,8 +86,8 @@
 			 * b = i want to buy the game 71
 			 */
 			let subKeys = ['a', 'o', 'b'];
-			if (subKeys.indexOf(e.code) !== -1) {
-				subscriptionSelection(e.code);
+			if (subKeys.indexOf(e.key) !== -1) {
+				subscriptionSelection(e.key);
 			}
 
 		}
