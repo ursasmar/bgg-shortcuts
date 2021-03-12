@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       BGG Shortcuts
 // @namespace  BGG Shortcuts
-// @version    0.9.8.1
+// @version    0.9.9
 // @description  Keyboard shortcuts for the Geek
 // @include     http://*.boardgamegeek.*/*
 // @include     http://boardgamegeek.*/*
@@ -13,7 +13,7 @@
 /*
  * CHANGLOG::
  * ============================================
- * 0.9.8.1 - Use the correct key
+ * 0.9.9 - Use the correct key
  * 0.9.8 - Update to hot key handling
  * 0.9.7 - Change some font sizes
  * 0.9.6 - Add shortcuts on the subscription page for auto selecting settings
