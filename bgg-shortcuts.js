@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       BGG Shortcuts
 // @namespace  BGG Shortcuts
-// @version    0.9.8
+// @version    0.9.8.1
 // @description  Keyboard shortcuts for the Geek
 // @include     http://*.boardgamegeek.*/*
 // @include     http://boardgamegeek.*/*
